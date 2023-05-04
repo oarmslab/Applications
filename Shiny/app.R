@@ -11,22 +11,21 @@ ui <- dashboardPage(
       box(width = 8,
           uiOutput("input_fields"),
           actionButton("save_s", "Save Subjects"),
-          verbatimTextOutput("output")),
-
-
+          verbatimTextOutput("output")
+      ),
       box(width = 2,
           uiOutput("grade_fields"),
           actionButton("save_g", "Save"),
-          verbatimTextOutput("output_1")),
-
-
+          verbatimTextOutput("output_1")
+      ),
       box(width = 2,
           uiOutput("credit_val_fields"),
           actionButton("save_cv", "Save"),
-          verbatimTextOutput("output_2"))),
-
-    box(tableOutput("output_list"))
-
+          verbatimTextOutput("output_2")
+      )
+    ),
+    box(tableOutput("output_list")),
+    box(textOutput("your_GPA"))
   )
 )
 
@@ -61,6 +60,32 @@ server <- function(input, output) {
 
   output$output_list <- renderTable({
     user_inputs()
+  })
+
+  output$your_GPA <- renderText({
+
+    # Convert the output list to a data frame
+    scores_data <- as.data.frame("output_list")
+
+    # create a section for grade point
+
+    scores_data <- scores_data %>%
+     mutate(grade_point = if_else(grade == "A", 4,
+                                  if_else(grade == "B+", 3.5,
+                                   if_else(grade == "B", 3,
+                                           if_else(grade == "C+", 2.5,
+                                                   if_else(grade == "C", 2,
+                                                           if_else(grade == "D+", 1.5,
+                                                                   if_else(grade == "D", 1, 0))))))),
+
+
+
+            gradeP_credit_V = gade_point*credit_value)
+    GPA = sum(gradeP_credit_V)/sum(credit_value)
+
+    # Return GPA
+
+    GPA
   })
 
 }
