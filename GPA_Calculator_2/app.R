@@ -27,9 +27,9 @@ ui <- dashboardPage(
     ),
     box(width = 8, title = strong("Results"),
         tableOutput("table_complete")
-    ),
+        ),
     box(width = 4, title = strong("Grade Point Average (GPA)"),
-        "Your GPA is", textOutput("your_GPA"))
+      "Your GPA is", textOutput("your_GPA"))
 
   )
 )
@@ -57,8 +57,8 @@ server <- function(input, output) {
     lapply(1:input$n_input, function(i) {
 
       if (input$t_input == "GPA on 4"){
-        selectInput(inputId = paste0("grade_", i), label = paste0("Grade ", i),
-                    choices = c("A", "B+", "B", "C+", "C", "D+", "D", "F"))
+      selectInput(inputId = paste0("grade_", i), label = paste0("Grade ", i),
+                  choices = c("A", "B+", "B", "C+", "C", "D+", "D", "F"))
       }else{
 
         selectInput(inputId = paste0("grade_", i), label = paste0("Grade ", i),
@@ -81,23 +81,23 @@ server <- function(input, output) {
 
     if (input$t_input == "GPA on 4"){
 
-      # Convert the output list to a data frame
-      scores_data <- as.data.frame(user_inputs())
+    # Convert the output list to a data frame
+    scores_data <- as.data.frame(user_inputs())
 
-      # create a section for grade point
+    # create a section for grade point
 
-      scores_data <- scores_data %>%
-        mutate(grade_point = if_else(grade == "A", 4,
-                                     if_else(grade == "B+", 3.5,
-                                             if_else(grade == "B", 3,
-                                                     if_else(grade == "C+", 2.5,
-                                                             if_else(grade == "C", 2,
-                                                                     if_else(grade == "D+", 1.5,
-                                                                             if_else(grade == "D", 1, 0))))))))
+    scores_data <- scores_data %>%
+      mutate(grade_point = if_else(grade == "A", 4,
+                                   if_else(grade == "B+", 3.5,
+                                           if_else(grade == "B", 3,
+                                                   if_else(grade == "C+", 2.5,
+                                                           if_else(grade == "C", 2,
+                                                                   if_else(grade == "D+", 1.5,
+                                                                           if_else(grade == "D", 1, 0))))))))
 
 
-      scores_data <- scores_data %>%
-        mutate(grade_point_credit_value = grade_point*credit_value)
+    scores_data <- scores_data %>%
+      mutate(grade_point_credit_value = grade_point*credit_value)
 
     }else{
 
@@ -126,30 +126,30 @@ server <- function(input, output) {
 
     if (input$t_input == "GPA on 4"){
 
-      # Convert the output list to a data frame
-      scores_data <- as.data.frame(user_inputs())
+    # Convert the output list to a data frame
+    scores_data <- as.data.frame(user_inputs())
 
-      # create a section for grade point
+    # create a section for grade point
 
-      scores_data <- scores_data %>%
-        mutate(grade_point = if_else(grade == "A", 4,
-                                     if_else(grade == "B+", 3.5,
-                                             if_else(grade == "B", 3,
-                                                     if_else(grade == "C+", 2.5,
-                                                             if_else(grade == "C", 2,
-                                                                     if_else(grade == "D+", 1.5,
-                                                                             if_else(grade == "D", 1, 0))))))))
-
-
-      scores_data <- scores_data %>%
-        mutate(grade_point_credit_value = grade_point*credit_value)
+    scores_data <- scores_data %>%
+      mutate(grade_point = if_else(grade == "A", 4,
+                                   if_else(grade == "B+", 3.5,
+                                           if_else(grade == "B", 3,
+                                                   if_else(grade == "C+", 2.5,
+                                                           if_else(grade == "C", 2,
+                                                                   if_else(grade == "D+", 1.5,
+                                                                           if_else(grade == "D", 1, 0))))))))
 
 
-      GPA =round(sum(scores_data$grade_point_credit_value)/sum(scores_data$credit_value), 3)
+    scores_data <- scores_data %>%
+      mutate(grade_point_credit_value = grade_point*credit_value)
 
-      #Return GPA
 
-      GPA = paste0(GPA, "/ 4.000")
+    GPA =round(sum(scores_data$grade_point_credit_value)/sum(scores_data$credit_value), 3)
+
+    #Return GPA
+
+    GPA = paste0(GPA, "/ 4.000")
     }else{
 
       # Convert the output list to a data frame
