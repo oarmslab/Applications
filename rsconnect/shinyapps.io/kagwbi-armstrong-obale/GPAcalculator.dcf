@@ -5,9 +5,9 @@ account: kagwbi-armstrong-obale
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 9025430
-bundleId: 7172020
-url: https://kagwbi-armstrong-obale.shinyapps.io/GPAcalculator/
-when: 1683171603.53231
-lastSyncTime: 1683171603.53236
+bundleId: 7176983
+url: https://armstrong-obale.shinyapps.io/GPAcalculator/
+when: 1683261757.86717
+lastSyncTime: 1683261757.86721
 asMultiple: FALSE
 asStatic: FALSE
